@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
 graph = {'A':['D','C','B'],
-	 'B':'E',
+	 'B':['E'],
 	 'C':['G','F'],
 	 'D':['H'],
 	 'E':['I'],
 	 'F':['J']}
+
+# The correct order is: ['A', 'B', 'E', 'I', 'C', 'F', 'J', 'G', 'D', 'H']
 
 def depthFirstSearch(graph,source):
 	stack = [source]
