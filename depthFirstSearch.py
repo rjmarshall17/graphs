@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import networkx as nx
+import matplotlib.pylab as plt
 
 graph = {'A':['D','C','B'],
 	 'B':['E'],
@@ -7,7 +9,7 @@ graph = {'A':['D','C','B'],
 	 'E':['I'],
 	 'F':['J']}
 
-# The correct order is: ['A', 'B', 'E', 'I', 'C', 'F', 'J', 'G', 'D', 'H']
+CORRECT_ORDER = ['A', 'B', 'E', 'I', 'C', 'F', 'J', 'G', 'D', 'H']
 
 def depthFirstSearch(graph,source):
 	stack = [source]
@@ -26,6 +28,13 @@ def depthFirstSearch(graph,source):
 # 			print("%s was in array" % s)
 	return array
 
+G = nx.Graph(graph)
+pos = nx.spring_layout(G)
+nx.draw_networkx_nodes(G,pos)
+nx.draw_networkx_edges(G,pos)
+nx.draw_networkx_labels(G,pos)
+
 if __name__ == '__main__':
     result = depthFirstSearch(graph,'A')
+    assert result == CORRECT_ORDER,"Incorrect order for return: %s" % result
     print(result)
