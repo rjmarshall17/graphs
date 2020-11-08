@@ -2,18 +2,19 @@
 import networkx as nx
 import matplotlib.pylab as plt
 
-graph = {'A':['D','C','B'],
-	 'B':'E',
-	 'C':['G','F'],
-	 'D':['H'],
-	 'E':['I'],
-	 'F':['J']}
+graph = {'A': ['D', 'C', 'B'],
+         'B': 'E',
+         'C': ['G', 'F'],
+         'D': ['H'],
+         'E': ['I'],
+         'F': ['J']}
 
 G = nx.Graph(graph)
 pos = nx.spring_layout(G)
-nx.draw_networkx_nodes(G,pos)
-nx.draw_networkx_edges(G,pos)
-nx.draw_networkx_labels(G,pos)
+nx.draw_networkx_nodes(G, pos)
+nx.draw_networkx_edges(G, pos)
+nx.draw_networkx_labels(G, pos)
+
 
 def breadthFirstSearch(graph, source):
     array = []
@@ -28,6 +29,7 @@ def breadthFirstSearch(graph, source):
                 stack.append(child)
     return array
 
+
 if __name__ == '__main__':
-    results = breadthFirstSearch(graph,"D")
+    results = breadthFirstSearch(graph, "A")
     print(results)
