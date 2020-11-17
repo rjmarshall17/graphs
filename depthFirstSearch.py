@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import networkx as nx
-import matplotlib.pylab as plt
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use("macosx")
 
 graph = {'A': ['D', 'C', 'B'],
          'B': ['E'],
@@ -35,6 +37,7 @@ pos = nx.spring_layout(G)
 nx.draw_networkx_nodes(G, pos)
 nx.draw_networkx_edges(G, pos)
 nx.draw_networkx_labels(G, pos)
+
 
 if __name__ == '__main__':
     result = depthFirstSearch(graph, 'A')
