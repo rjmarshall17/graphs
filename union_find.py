@@ -6,6 +6,35 @@ graph = {
 }
 
 
+class DSU(object):
+    def __init__(self, size):
+        if isinstance(size, int):
+            if size <= 0:
+                raise ValueError("Invalid size, must be greater than 0")
+        else:
+            raise ValueError("Invalid size, must be an integer")
+        self.par = [x for x in range(size)]
+        self.rnk = [0] * size
+
+    def find(self, x):
+        if self.par[x] != x:
+            self.par[x] = self.find(self.par[x])
+        return self.par[x]
+
+    def union(self, x, y):
+        xr, yr = self.find(x), self.find(y)
+        if xr == yr:
+            return False
+        elif self.rnk[xr] < self.rnk[yr]:
+            self.par[xr] = yr
+        elif self.rnk[xr] > self.rnk[yr]:
+            self.par[yr] = xr
+        else:
+            self.par[yr] = xr
+            self.rnk[xr] += 1
+        return True
+
+
 class UnionFind:
     def __init__(self, vertices):
         self.V = vertices
@@ -21,7 +50,7 @@ class UnionFind:
             return i
         return self.find(parent, parent[i])
 
-    def apply_union(self, parent, rank, x, y):
+    def union(self, parent, rank, x, y):
         xroot = self.find(parent, x)
         yroot = self.find(parent, y)
         if rank[xroot] < rank[yroot]:
