@@ -5,6 +5,7 @@ from collections import defaultdict, deque
 # shortest path in the graph using
 # defaultdict
 
+
 # Function to find the shortest path between two
 # nodes of an undirected graph, make sure that the
 # nodes are setup with neighbors in both directions
@@ -26,15 +27,13 @@ def BreadthFirstSearchShortestPath(graph, start, end):
     if start == end:
         return [start]
 
-    # Loop to traverse the graph
-    # with the help of the queue
+    # Loop to traverse the graph with the help of the queue
     while queue:
-        path = queue.popleft()
-        node = path[-1]
+        bfs_path = queue.popleft()
+        node = bfs_path[-1]
         # print("node=%s" % node)
 
-        # Codition to check if the
-        # current node is not visited
+        # Condition to check if the current node is not visited
         if node not in visited:
             neighbors = graph[node]
             # print("Neighbors for %s: %s" % (node,neighbors))
@@ -42,7 +41,7 @@ def BreadthFirstSearchShortestPath(graph, start, end):
             # Loop to iterate over the
             # neighbours of the node
             for neighbor in neighbors:
-                new_path = list(path)
+                new_path = list(bfs_path)
                 new_path.append(neighbor)
                 queue.append(new_path)
 
@@ -60,26 +59,26 @@ def BreadthFirstSearchShortestPath(graph, start, end):
 # For an undirected graph we need to make sure that we show connections
 # in both directions
 EDGES_FOR_TEST2 = [
-    (1,2),
-    (2,4),
-    (2,5),
-    (1,6),
-    (6,9),
-    (6,10),
-    (1,3),
-    (3,7),
-    (3,8),
+    (1, 2),
+    (2, 4),
+    (2, 5),
+    (1, 6),
+    (6, 9),
+    (6, 10),
+    (1, 3),
+    (3, 7),
+    (3, 8),
 ]
 
 BANK_TRANSFER_DATA = [
-    (4,2,2),
-    (5,1,2),
-    (2,4,1),
-    (9,10,5),
-    (7,10,100),
-    (1,5,8),
-    (9,10,2),
-    (7,10,3),
+    (4, 2, 2),
+    (5, 1, 2),
+    (2, 4, 1),
+    (9, 10, 5),
+    (7, 10, 100),
+    (1, 5, 8),
+    (9, 10, 2),
+    (7, 10, 3),
 ]
 
 FROM_BANK = 0

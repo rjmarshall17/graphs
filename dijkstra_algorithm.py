@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-def djisktra(graph, initial, end):
+def dijkstra(graph, initial, end):
     # shortest paths is a dict of nodes
     # whose value is a tuple of (previous node, weight)
     shortest_paths = {initial: (None, 0)}
