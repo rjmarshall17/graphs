@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
+from typing import List
 
-<<<<<<< HEAD
 # A Union Find class, aka Disjoint Set Union
 class UnionFind:
     def __init__(self):
@@ -35,8 +35,7 @@ class UnionFind:
 
         self.parent[a] = b
         self.size[b] += self.size[a]
-=======
-from typing import List
+
 graph = {
     "A":{}
 }
@@ -158,4 +157,3 @@ class QuickUnion:
         i = self.root(p)
         j = self.root(q)
         self.id[i] = j
->>>>>>> bc751fae276ccd6692a50da0d0a107a83591c511
