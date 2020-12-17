@@ -1,52 +1,42 @@
 #!/usr/bin/env python3
 from collections import defaultdict, deque
 
-# Python implementation to find the
-# shortest path in the graph using
-# defaultdict
 
-
-# Function to find the shortest path between two
-# nodes of an undirected graph, make sure that the
-# nodes are setup with neighbors in both directions
-# i.e. if there is a connection from 1->2 then there
+# Function to find the shortest path between two nodes of an undirected graph. Make sure that the
+# nodes are setup with neighbors in both directions i.e. if there is a connection from 1->2 then there
 # also needs to be a connection from 2->1.
-def BreadthFirstSearchShortestPath(graph, start, end):
+def BreadthFirstSearchShortestPath(bfs_graph, start, end):
+    # If the desired node is reached, i.e. start is also the end, we're done
+    if start == end:
+        return [start]
+
     visited = []
 
-    # Queue for traversing the graph in the BFS. Use a 
-    # deque since this is a queue and a deque popleft()
-    # has a time complexity of O(1) vs. O(n-k), where 
-    # n=length of the list and k is the index being 
+    # Queue for traversing the graph in the BFS. Use a deque since this is a queue and a deque popleft()
+    # has a time complexity of O(1) vs. O(n-k), where n=length of the list and k is the index being
     # popped, for a normal list.
     queue = deque()
     queue.append([start])
 
-    # If the desired node is
-    # reached
-    if start == end:
-        return [start]
-
-    # Loop to traverse the graph with the help of the queue
+    # Loop to traverse the graph with the help of the queue which contains lists starting
+    # from the start node with all neighbors of neighbors appended to it.
     while queue:
         bfs_path = queue.popleft()
         node = bfs_path[-1]
-        # print("node=%s" % node)
 
         # Condition to check if the current node is not visited
         if node not in visited:
-            neighbors = graph[node]
-            # print("Neighbors for %s: %s" % (node,neighbors))
+            neighbors = bfs_graph[node]
 
-            # Loop to iterate over the
-            # neighbours of the node
+            # Loop to iterate over the neighbours of the node. For each new neighbor
+            # add them to the current bfs_path, the path we popped from the queue,
+            # so that the nodes can be checked if they have not already been visited.
             for neighbor in neighbors:
                 new_path = list(bfs_path)
                 new_path.append(neighbor)
                 queue.append(new_path)
 
-                # Condition to check if the
-                # neighbour node is the end
+                # Condition to check if the neighbour node is the end
                 if neighbor == end:
                     return new_path
             visited.append(node)
