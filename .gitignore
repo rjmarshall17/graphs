@@ -1,1 +1,4 @@
-.spyprojec/*
+.spyproject/*
+.idea/*
+__pycache__/*
+venv/*
