@@ -97,16 +97,16 @@ if __name__ == "__main__":
         graph2[edge[1]].append(edge[0])
 
     print(graph2)
-    print("Shortest path for 4->2: %s" % BreadthFirstSearchShortestPath(graph2,4,2))
-    print("Shortest path for 10->2: %s" % BreadthFirstSearchShortestPath(graph2,10,2))
-    print("Shortest path for 5->1: %s" % BreadthFirstSearchShortestPath(graph2,5,1))
-    print("Shortest path for 6->9: %s" % BreadthFirstSearchShortestPath(graph2,6,9))
+    print("Shortest path for 4->2: %s" % BreadthFirstSearchShortestPath(graph2, 4, 2))
+    print("Shortest path for 10->2: %s" % BreadthFirstSearchShortestPath(graph2, 10, 2))
+    print("Shortest path for 5->1: %s" % BreadthFirstSearchShortestPath(graph2, 5, 1))
+    print("Shortest path for 6->9: %s" % BreadthFirstSearchShortestPath(graph2, 6, 9))
 
     print("Checking bank transfers:")
     transfer_succeeds = False
     for transfer in BANK_TRANSFER_DATA:
         # print("from=%s to=%s threshold=%s" % (transfer[FROM_BANK],transfer[TO_BANK],transfer[THRESHOLD]))
-        path = BreadthFirstSearchShortestPath(graph2,transfer[FROM_BANK],transfer[TO_BANK])
+        path = BreadthFirstSearchShortestPath(graph2, transfer[FROM_BANK], transfer[TO_BANK])
         if len(path) <= transfer[THRESHOLD]:
             transfer_succeeds = True
         else:
