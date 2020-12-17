@@ -1,4 +1,8 @@
 .spyproject/*
 .idea/*
 __pycache__/*
+<<<<<<< HEAD
 venv/*
+=======
+*~
+>>>>>>> bc751fae276ccd6692a50da0d0a107a83591c511
