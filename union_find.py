@@ -48,6 +48,7 @@ class UnionFind:
         :return: parent index
         """
         while index != self.union_find[index]:
+            print("find: %s" % self.union_find)
             self.union_find[index] = self.union_find[self.union_find[index]]
             index = self.union_find[index]
         return index
