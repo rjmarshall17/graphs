@@ -1,6 +1,25 @@
 #!/usr/bin/env python3
 from collections import defaultdict, deque
 
+# Pseudocode
+"""
+    bfs_shortest_path(graph, start, end)
+        queue = Queue()
+        queue.push([start])
+        while queue is not empty
+            path = queue.pop
+            node = path[-1]         // We take the last component because we placed a list of nodes in the queue
+            if node has not been visited
+                Get list of neighbors
+                for each neighbor
+                    new path <- path list   // Path was popped from queue
+                    Append the neighbor to new path from the queue
+                    Add the new path to the queue
+                    if neighbor is the end
+                        return new path
+                add node to visited
+        return empty list, no connection found
+"""
 
 # Function to find the shortest path between two nodes of an undirected graph. Make sure that the
 # nodes are setup with neighbors in both directions i.e. if there is a connection from 1->2 then there
@@ -41,8 +60,7 @@ def BreadthFirstSearchShortestPath(bfs_graph, start, end):
                     return new_path
             visited.append(node)
 
-            # Condition when the nodes
-    # are not connected
+    # Condition when the nodes are not connected
     return []
 
 
