@@ -3,6 +3,7 @@
 from collections import defaultdict
 from random import randint
 
+
 class Graph:
     def __init__(self):
         self.edges = defaultdict(list)

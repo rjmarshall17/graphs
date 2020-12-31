@@ -1,2 +1,64 @@
-In mathematics, particularly graph theory, and computer science, a directed acyclic graph (DAG or dag /ˈdæɡ/ (About this soundlisten)) is a directed graph with no directed cycles. That is, it consists of vertices and edges (also called arcs), with each edge directed from one vertex to another, such that there is no way to start at any vertex v and follow a consistently-directed sequence of edges that eventually loops back to v again. Equivalently, a DAG is a directed graph that has a topological ordering, a sequence of the vertices such that every edge is directed from earlier to later in the sequence.
+Graphs in General:
+------------------
+
+In mathematics, graph theory is the study of graphs, which are mathematical structures used to model
+pairwise relations between objects. A graph in this context is made up of vertices (also called nodes
+or points) which are connected by edges (also called links or lines). A distinction is made between
+undirected graphs, where edges link two vertices symmetrically, and directed graphs, where edges link
+two vertices asymmetrically; see Graph (discrete mathematics) for more detailed definitions and for
+other variations in the types of graph that are commonly considered. Graphs are one of the prime
+objects of study in discrete mathematics.
+
+In computer science, graphs are used to represent networks of communication, data organization,
+computational devices, the flow of computation, etc. For instance, the link structure of a website
+can be represented by a directed graph, in which the vertices represent web pages and directed edges
+represent links from one page to another. A similar approach can be taken to problems in social media,[9]
+travel, biology, computer chip design, mapping the progression of neurodegenerative diseases,[10][11]
+and many other fields. The development of algorithms to handle graphs is therefore of major interest in
+computer science. The transformation of graphs is often formalized and represented by graph rewrite systems.
+Complementary to graph transformation systems focusing on rule-based in-memory manipulation of graphs are
+graph databases geared towards transaction-safe, persistent storing and querying of graph-structured data.
+
+Representations:
+----------------
+
+In graph theory and computer science, an adjacency list is a collection of unordered lists used to represent
+a finite graph. Each list describes the set of neighbors of a vertex in the graph. This is one of several
+commonly used representations of graphs for use in computer programs.
+
+In Python it would be possible to create a graph using defaultdict from the collections module, e.g.:
+
+graph = defaultdict(list)
+
+An Adjacency List:
+------------------
+
+Assume we have the following graph of nodes/vertices and edges:
+
+A -> B
+A -> C
+B -> C
+B -> D
+C -> D
+D -> C
+E -> F
+F -> C
+
+We could represent this in Python with:
+
+graph = {'A': ['B', 'C'],
+         'B': ['C', 'D'],
+         'C': ['D'],
+         'D': ['C'],
+         'E': ['F'],
+         'F': ['C']}
+
+
+
+In mathematics, particularly graph theory, and computer science, a directed acyclic graph (DAG or dag)
+is a directed graph with no directed cycles. That is, it consists of vertices and edges (also called arcs),
+with each edge directed from one vertex to another, such that there is no way to start at any vertex v and
+follow a consistently-directed sequence of edges that eventually loops back to v again. Equivalently, a DAG
+is a directed graph that has a topological ordering, a sequence of the vertices such that every edge is
+directed from earlier to later in the sequence.
 
