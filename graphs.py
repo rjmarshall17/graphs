@@ -109,7 +109,7 @@ class Graph:
         return []
 
     def __dijkstra__(self, start, end):
-        print("__dijkstra__: start=%s end=%s" % (start, end))
+        # print("__dijkstra__: start=%s end=%s" % (start, end))
         # shortest paths is a dict of nodes
         # whose value is a tuple of (previous node, weight)
         shortest_paths = {start: (None, 0)}
@@ -145,7 +145,59 @@ class Graph:
         # Reverse path
         path = path[::-1]
         return path
-    
+
+    def __bellman_ford__(self, start, end):
+        # print('__bellman_ford__: start=%s end=%s' % (start, end))
+        # Initialize the distance from the source node S to all other nodes as
+        # infinite and to itself as 0.
+        node_count = len(self.graph.keys())
+        distances = {}
+        for vertex in self.graph.keys():
+            distances[vertex] = float('inf')
+        distances[start] = 0
+        parent = defaultdict(dict)
+
+        for node in range(node_count):
+            # If we don't modify the weights, then we're done so break out of the loop
+            modified_weights = False
+            for vertex in self.graph.keys():
+                for dest in self.graph[vertex]:
+                    if distances[dest] > distances[vertex] + self.weights[(vertex, dest)]:
+                        distances[dest] = distances[vertex] + self.weights[(vertex, dest)]
+                        parent[dest] = vertex
+                        modified_weights = True
+            if not modified_weights:
+                # if node < self.node_cnt - 1:
+                #     print("Breaking out of loop early at %d instead of %d" %
+                #           (
+                #               node,
+                #               self.node_cnt,
+                #           ))
+                break
+
+        if end is not None:
+            if end in parent:
+                # print(['%s: %s' % (k,parent[k]) for k in sorted(parent.keys()) ])
+                shortest_path = [end]
+                current = end
+                while current != start:
+                    shortest_path.append(parent[current])
+                    current = parent[current]
+                # print("The shortest path from %s to %s is: %s" % (start,
+                #                                                   end,
+                #                                                   shortest_path[::-1]))
+                return shortest_path[::-1]
+            else:
+                raise ValueError("Invalid end node %s, no such node" % end)
+
+        for vertex in self.graph.keys():
+            for dest in self.graph[vertex]:
+                if distances[dest] > distances[vertex] + self.weights[(vertex, dest)]:
+                    raise ValueError("Negative weight cycle exist in the graph")
+
+        # for node in self.graph.keys():
+        #     print("Source Node(" + str(start) + ") -> Destination Node(" + str(node) + ") : " + str(distances[node]))
+
     def depth_first_search(self, start):
         stack = [start]
         array = []
@@ -166,56 +218,3 @@ class Graph:
         # 		else:
         # 			print("%s was in array" % current)
         return array
-
-    def __bellman_ford__(self, start, end):
-        # Initialize the distance from the source node S to all other nodes as
-        # infinite and to itself as 0.
-        node_count = len(self.graph.keys())
-        distance = [float('inf')] * node_count
-        distance[start] = 0
-        parent = defaultdict(dict)
-
-        for node in range(node_count):
-            # If we don't modify the weights, then we're done so break out of the loop
-            modified_weights = False
-            for edge in self.edge_list:
-                if (distance[edge.dst] > distance[edge.src] + edge.weight):
-                    # print("Updating distance for %s from %s with weight %s" %
-                    #       (
-                    #           edge.dst,
-                    #           edge.src,
-                    #           edge.weight,
-                    #       ))
-                    distance[edge.dst] = distance[edge.src] + edge.weight
-                    parent[edge.dst] = edge.src
-                    modified_weights = True
-            if not modified_weights:
-                # if node < self.node_cnt - 1:
-                #     print("Breaking out of loop early at %d instead of %d" %
-                #           (
-                #               node,
-                #               self.node_cnt,
-                #           ))
-                break
-
-        if end is not None:
-            if end in parent:
-                print(['%s: %s' % (k,parent[k]) for k in sorted(parent.keys()) ])
-                shortest_path = [end]
-                current = end
-                while current != source:
-                    shortest_path.append(parent[current])
-                    current = parent[current]
-                print("The shortest path from %s to %s is: %s" % (source,
-                                                                  end,
-                                                                  list(reversed(shortest_path))))
-            else:
-                raise ValueError("Invalid end node %s, no such node" % end)
-
-        for edge in self.edge_list:
-
-            if (distance[edge.dst] > distance[edge.src] + edge.weight):
-                raise ValueError("Negative weight cycle exist in the graph")
-
-        for node in range(self.node_cnt):
-            print("Source Node(" + str(source) + ") -> Destination Node(" + str(node) + ") : " + str(distance[node]))
