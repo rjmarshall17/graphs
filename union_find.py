@@ -2,13 +2,14 @@
 
 from collections import defaultdict
 
+
 # A Union Find class, aka Disjoint Set Union
 class UnionFind:
     """
     UnionFind is a class the implements a union find, disjoint set union,
     with path compression and ranking in order to make it as efficient as
     possible. With both ranking and path compression, the time complexity
-    is, according to Wikipedia, alph(n) or "Inverse Ackermann" time. It
+    is, according to Wikipedia, alpha(n) or "Inverse Ackermann" time. It
     also says that it may be O(log*n).
     The class is initialized with the number of expected elements.
     """

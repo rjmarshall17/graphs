@@ -53,8 +53,6 @@ graph = {'A': ['B', 'C'],
          'E': ['F'],
          'F': ['C']}
 
-
-
 In mathematics, particularly graph theory, and computer science, a directed acyclic graph (DAG or dag)
 is a directed graph with no directed cycles. That is, it consists of vertices and edges (also called arcs),
 with each edge directed from one vertex to another, such that there is no way to start at any vertex v and
@@ -62,3 +60,143 @@ follow a consistently-directed sequence of edges that eventually loops back to v
 is a directed graph that has a topological ordering, a sequence of the vertices such that every edge is
 directed from earlier to later in the sequence.
 
+Dijkstra Algorithm for shortest path:
+-------------------------------------
+The following is from Wikipedia:
+
+In the following pseudocode algorithm, length(u, v) returns the length of the edge joining (i.e. the distance
+between) the two neighbor-nodes u and v. The variable alt on line 18 is the length of the path from the root
+node to the neighbor node v if it were to go through u. If this path is shorter than
+the current shortest path recorded for v, that current path is replaced with this alt path. The prev array
+is populated with a pointer to the "next-hop" node on the source graph to get the shortest route to the source.
+
+ 1  function Dijkstra(Graph, start, end=None):
+ 2
+ 3      create vertex set Q
+ 4
+ 5      for each vertex v in Graph:
+ 6          distances[v] ← INFINITY
+ 7          parents[v] ← UNDEFINED
+ 8          add v to Q
+ 9      dist[start] ← 0
+10
+11      while Q is not empty:
+12          u ← Q pop
+13          if end is not None
+14              if u == end
+15                  exit loop
+16          for each neighbor v of u:
+17              if distances[v] > distances[u] + length(u, v):
+18                  distances[v] ← distances[u] + length(u, v)
+19                  parents[v] ← u
+20
+21      if end is not None:
+22          if end in parents
+23              create return list
+24              current <- end
+25              while True
+26                  if current is None      // We didn't have a path to the current node
+27                      return empty list
+28                  insert current at beginning of return list
+29                  if current == start
+30                      exit the loop
+31                  current = parents[current]
+32              return return list
+33      else
+34          raise error end not in parents
+35
+36      return dist[], prev[]
+
+Bellman Ford Algorithm for shortest path:
+-----------------------------------------
+
+function BellmanFord(list vertices, list edges, vertex source) is
+
+    // This implementation takes in a graph, represented as
+    // lists of vertices (represented as integers [0..n-1]) and edges,
+    // and fills two arrays (distances and parents) holding
+    // the shortest path from the source to each vertex
+
+    distances := dictionary
+    parents := dictionary
+
+    // Step 1: initialize graph
+    for each vertex v in vertices do
+        distances[v] := inf             // Initialize the distance to all vertices to infinity
+        parents[v] := null         // And having a null parents
+
+    distance[source] := 0              // The distance from the source to itself is, of course, zero
+
+    // Step 2: relax edges repeatedly
+    repeat |V|−1 times:
+        distances_modified <- False
+        for each edge (u, v) with weight w in edges do
+            if distances[u] + w < distances[v] then
+                distances[v] := distances[u] + w
+                parents[v] := u
+                distances_modified <- True
+        if not distances_modified
+            exit loop
+
+    // Step 3: check for negative-weight cycles
+    for each edge (u, v) with weight w in edges do
+        if distances[u] + w < distances[v] then
+            error "Graph contains a negative-weight cycle"
+
+    return distance, parents
+
+To get the shortest path using above code:
+------------------------------------------
+
+if end is not null
+    if end in parents and is not null/none
+        Create shortest path list
+        Append end to shortest path list
+        current <- end
+        while current != start
+            Append parents[current] to shortest path list
+            current <- parents[current]
+        Return the reversed the shortest path list
+    else
+        raise error end is not valid
+
+Union Find:
+-----------
+UnionFind is a class the implements a union find, disjoint set union, with path compression
+and ranking in order to make it as efficient as possible. With both ranking and path compression,
+the time complexity is, according to Wikipedia, alpha(n) or "Inverse Ackermann" time. It also says
+that it may be O(log*n).
+
+In general a Union Find is set up with a list of integers. If the values you want to map are not
+integers, you would need to assign a unique ID to the values and track them that way. See the
+Leet Code accounts merge in the miscellaneous repository for an example.
+
+Pseudocode:
+
+Union Find
+    __init__ parameter the number of expected vertices
+        union_find <- list of integers from 0 to expected number of vertices - 1
+        ranks <- [0] for number of expected vertices
+
+    find parameter is the index to find
+        # This function will find the parent of the element at the provided index, this determines the set
+        # to which this index belongs. We use path compression to make this go faster, i.e. we don't need
+        # to traverse the intermediate nodes
+        while index != union find at index
+            union find at index <- union find at index[union find at index]
+            index = union find at index
+        return index
+
+    union parameters the vertices to join
+        get parent for first vertex, e.g. find vertex1
+        get parent for second vertex, e.g. find vertex2
+        if first == second                              // They are already in the same set
+            return
+        if rank of first is less then rank of second
+            union find at index first <- union find at index of second
+        else if rank of first is greater than rank of second
+            union find at index second <- union find at index of first
+        else
+            # Choose one arbitrarily, i.e. we choose the second
+            union find at index of first <- union find at index of second
+            increment ranks for second by 1
