@@ -20,26 +20,15 @@ class UnionFind:
     @property
     def most_members(self):
         """
-        This function determines the parent(s) with the most members for
-        each of the parents. It returns a list of tuples where the first
-        element is the parent ID and the second element is the number of
-        members for that parent.
-        most_members -> [(p,n),...] where p=parent and n=number of elements
-        for that parent.
+        This function will return the parent with the most members.
         """
-        ret = defaultdict(list)
-        # At each index of the union find should be the parent ID,
-        # i.e. the index of the parent, so build list of the indices
-        # with the same parent.
-        members = [(-1,0)]
-        for i, parent in enumerate(self.union_find):
-            ret[parent].append(i)
-            if len(ret[parent]) > members[0][1]:
-                members = [(parent, len(ret[parent]))]
-            elif len(ret[parent]) == members[0][1]:
-                members.append((parent, len(ret[parent])))
-
-        return members
+        most_members = -1
+        for parent in set(self.union_find):
+            if most_members < 0:
+                most_members = parent
+            if self.union_find.count(parent) > self.union_find.count(most_members):
+                most_members = parent
+        return most_members
 
     def find(self, index):
         """
@@ -49,7 +38,7 @@ class UnionFind:
         :return: parent index
         """
         while index != self.union_find[index]:
-            print("find: %s" % self.union_find)
+            # print("find: %s" % self.union_find)
             self.union_find[index] = self.union_find[self.union_find[index]]
             index = self.union_find[index]
         return index
